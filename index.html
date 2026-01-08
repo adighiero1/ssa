@@ -1,0 +1,912 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <title>Apoyo Seguro Social | Acompañamiento en trámites SSA</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <style>
+    :root {
+      --primary: #2563eb;   /* azul principal */
+      --primary-dark: #1d4ed8;
+      --accent: #14b8a6;    /* teal */
+      --bg: #f3f4f6;        /* gris muy claro */
+      --card-bg: #ffffff;
+      --text-main: #111827;
+      --text-muted: #6b7280;
+      --border-soft: #e5e7eb;
+      --danger: #dc2626;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+        sans-serif;
+      background: linear-gradient(135deg, #eff6ff, #ecfeff);
+      color: var(--text-main);
+      line-height: 1.5;
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      background-color: rgba(255, 255, 255, 0.9);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border-soft);
+    }
+
+    .nav {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0.9rem 1.25rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      font-weight: 700;
+      font-size: 1.1rem;
+      color: var(--primary-dark);
+    }
+
+    .logo-icon {
+      width: 32px;
+      height: 32px;
+      border-radius: 999px;
+      background: radial-gradient(circle at 30% 30%, #bfdbfe, #1d4ed8);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 0.9rem;
+      box-shadow: 0px 8px 20px rgba(37, 99, 235, 0.3);
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 1.25rem;
+      font-size: 0.95rem;
+      color: var(--text-muted);
+    }
+
+    .nav-links a:hover {
+      color: var(--primary);
+    }
+
+    .nav-cta {
+      display: flex;
+      gap: 0.5rem;
+      align-items: center;
+    }
+
+    .btn {
+      border-radius: 999px;
+      padding: 0.45rem 1rem;
+      font-size: 0.9rem;
+      font-weight: 500;
+      border: 1px solid transparent;
+      cursor: pointer;
+      transition: all 0.16s ease-out;
+      white-space: nowrap;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+      color: white;
+      box-shadow: 0px 10px 25px rgba(37, 99, 235, 0.35);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-1px);
+      box-shadow: 0px 14px 30px rgba(37, 99, 235, 0.45);
+    }
+
+    .btn-outline {
+      border-color: var(--border-soft);
+      background-color: white;
+      color: var(--text-muted);
+    }
+
+    .btn-outline:hover {
+      border-color: var(--primary);
+      color: var(--primary);
+      box-shadow: 0px 6px 16px rgba(15, 23, 42, 0.1);
+    }
+
+    main {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 2rem 1.25rem 3rem;
+    }
+
+    /* HERO */
+
+    .hero {
+      display: grid;
+      grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr);
+      gap: 2.5rem;
+      align-items: center;
+      padding: 2.25rem 1.6rem;
+      border-radius: 24px;
+      background: radial-gradient(circle at -10% -20%, #dbeafe, #eff6ff)
+        border-box;
+      border: 1px solid rgba(191, 219, 254, 0.9);
+      box-shadow: 0px 24px 60px rgba(15, 23, 42, 0.07);
+      margin-bottom: 2.75rem;
+    }
+
+    .hero-kicker {
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--accent);
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+    }
+
+    .hero-title {
+      font-size: clamp(1.9rem, 3vw, 2.4rem);
+      font-weight: 800;
+      color: var(--primary-dark);
+      margin-bottom: 0.85rem;
+    }
+
+    .hero-highlight {
+      background: linear-gradient(120deg, var(--accent), var(--primary));
+      -webkit-background-clip: text;
+      color: transparent;
+    }
+
+    .hero-text {
+      font-size: 0.98rem;
+      color: var(--text-muted);
+      margin-bottom: 1rem;
+    }
+
+    .hero-list {
+      list-style: none;
+      margin-bottom: 1.4rem;
+      display: grid;
+      gap: 0.4rem;
+      font-size: 0.9rem;
+      color: var(--text-muted);
+    }
+
+    .hero-list li::before {
+      content: "✔";
+      margin-right: 0.4rem;
+      color: var(--accent);
+      font-size: 0.85rem;
+    }
+
+    .hero-cta-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      align-items: center;
+    }
+
+    .hero-note {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+    }
+
+    .hero-note strong {
+      color: var(--danger);
+    }
+
+    .hero-card {
+      background-color: rgba(255, 255, 255, 0.95);
+      border-radius: 18px;
+      padding: 1.3rem 1.25rem;
+      border: 1px solid rgba(226, 232, 240, 0.9);
+      box-shadow: 0px 16px 40px rgba(15, 23, 42, 0.09);
+    }
+
+    .hero-card-title {
+      font-size: 0.95rem;
+      font-weight: 600;
+      margin-bottom: 0.4rem;
+      color: var(--primary-dark);
+    }
+
+    .hero-badge-row {
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+      margin-bottom: 0.6rem;
+    }
+
+    .badge {
+      font-size: 0.7rem;
+      padding: 0.18rem 0.6rem;
+      border-radius: 999px;
+      background-color: #eff6ff;
+      color: var(--primary-dark);
+      border: 1px solid rgba(191, 219, 254, 0.9);
+    }
+
+    .badge-soft {
+      background-color: #ecfeff;
+      color: #0f766e;
+      border-color: #a5f3fc;
+    }
+
+    .hero-card-list {
+      list-style: none;
+      display: grid;
+      gap: 0.35rem;
+      font-size: 0.82rem;
+      color: var(--text-muted);
+      margin-bottom: 0.6rem;
+    }
+
+    .hero-card-list li::before {
+      content: "•";
+      margin-right: 0.35rem;
+      color: var(--accent);
+    }
+
+    .hero-mini {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+
+    /* SECCIONES GENERALES */
+
+    .section {
+      margin-bottom: 2.75rem;
+    }
+
+    .section-header {
+      margin-bottom: 1.5rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .section-title {
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: var(--primary-dark);
+    }
+
+    .section-subtitle {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      max-width: 450px;
+    }
+
+    /* SERVICIOS */
+
+    .grid {
+      display: grid;
+      gap: 1.25rem;
+    }
+
+    .grid-3 {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .grid-2 {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .card {
+      background-color: var(--card-bg);
+      border-radius: 18px;
+      padding: 1.1rem 1.1rem 1.2rem;
+      border: 1px solid var(--border-soft);
+      box-shadow: 0px 14px 35px rgba(15, 23, 42, 0.04);
+      display: flex;
+      flex-direction: column;
+      gap: 0.35rem;
+    }
+
+    .card-label {
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      font-weight: 600;
+      color: var(--accent);
+    }
+
+    .card-title {
+      font-size: 0.98rem;
+      font-weight: 600;
+    }
+
+    .card-text {
+      font-size: 0.86rem;
+      color: var(--text-muted);
+    }
+
+    .card-list {
+      list-style: none;
+      font-size: 0.82rem;
+      color: var(--text-muted);
+      margin-top: 0.4rem;
+      display: grid;
+      gap: 0.25rem;
+    }
+
+    .card-list li::before {
+      content: "•";
+      margin-right: 0.35rem;
+      color: var(--accent);
+    }
+
+    /* PROCESO */
+
+    .steps {
+      display: grid;
+      gap: 0.75rem;
+    }
+
+    .step {
+      display: flex;
+      gap: 0.75rem;
+      align-items: flex-start;
+    }
+
+    .step-number {
+      width: 26px;
+      height: 26px;
+      border-radius: 999px;
+      background-color: #e0f2fe;
+      color: var(--primary-dark);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.85rem;
+      font-weight: 600;
+      flex-shrink: 0;
+    }
+
+    .step-body-title {
+      font-size: 0.9rem;
+      font-weight: 600;
+      margin-bottom: 0.15rem;
+    }
+
+    .step-body-text {
+      font-size: 0.82rem;
+      color: var(--text-muted);
+    }
+
+    /* TESTIMONIOS SIMPLIFICADOS */
+
+    .quote {
+      font-size: 0.86rem;
+      color: var(--text-muted);
+      font-style: italic;
+    }
+
+    .quote-name {
+      margin-top: 0.35rem;
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--text-main);
+    }
+
+    /* CONTACTO */
+
+    .contact-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
+      gap: 1.7rem;
+      align-items: flex-start;
+    }
+
+    .form {
+      display: grid;
+      gap: 0.8rem;
+    }
+
+    .field {
+      display: grid;
+      gap: 0.25rem;
+    }
+
+    label {
+      font-size: 0.82rem;
+      font-weight: 500;
+      color: var(--text-main);
+    }
+
+    input,
+    textarea {
+      border-radius: 10px;
+      border: 1px solid var(--border-soft);
+      padding: 0.55rem 0.7rem;
+      font-size: 0.85rem;
+      font-family: inherit;
+      outline: none;
+      background-color: rgba(255, 255, 255, 0.9);
+    }
+
+    input:focus,
+    textarea:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 1px rgba(37, 99, 235, 0.3);
+    }
+
+    textarea {
+      resize: vertical;
+      min-height: 90px;
+    }
+
+    .contact-note {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      margin-top: 0.5rem;
+    }
+
+    .contact-side {
+      font-size: 0.86rem;
+      color: var(--text-muted);
+      border-radius: 18px;
+      padding: 1.1rem 1.2rem;
+      background: rgba(15, 23, 42, 0.95);
+      color: #e5e7eb;
+      box-shadow: 0px 18px 40px rgba(15, 23, 42, 0.5);
+    }
+
+    .contact-side-title {
+      font-size: 0.95rem;
+      font-weight: 600;
+      margin-bottom: 0.35rem;
+      color: #e0f2fe;
+    }
+
+    .contact-side-list {
+      list-style: none;
+      display: grid;
+      gap: 0.25rem;
+      font-size: 0.82rem;
+      margin-top: 0.4rem;
+    }
+
+    .contact-side-list li::before {
+      content: "•";
+      margin-right: 0.35rem;
+      color: #7dd3fc;
+    }
+
+    .disclaimer {
+      font-size: 0.75rem;
+      color: #9ca3af;
+      margin-top: 0.8rem;
+    }
+
+    /* FOOTER */
+
+    footer {
+      border-top: 1px solid var(--border-soft);
+      padding: 1.3rem 1.25rem 2rem;
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      max-width: 1100px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+    }
+
+    footer a {
+      color: var(--primary);
+      font-weight: 500;
+    }
+
+    /* RESPONSIVE */
+
+    @media (max-width: 840px) {
+      .hero {
+        grid-template-columns: minmax(0, 1fr);
+        padding: 1.7rem 1.4rem;
+      }
+
+      .grid-3 {
+        grid-template-columns: minmax(0, 1fr);
+      }
+
+      .grid-2 {
+        grid-template-columns: minmax(0, 1fr);
+      }
+
+      .contact-grid {
+        grid-template-columns: minmax(0, 1fr);
+      }
+
+      .nav-links {
+        display: none;
+      }
+
+      .nav-cta {
+        margin-left: auto;
+      }
+    }
+
+    @media (max-width: 500px) {
+      main {
+        padding-inline: 1rem;
+      }
+
+      .hero {
+        padding-inline: 1.1rem;
+      }
+
+      .btn {
+        width: 100%;
+        justify-content: center;
+        text-align: center;
+      }
+
+      .hero-cta-row {
+        flex-direction: column;
+        align-items: stretch;
+      }
+    }
+
+    .whatsapp-float {
+  position: fixed;
+  bottom: 22px;
+  right: 22px;
+  width: 56px;
+  height: 56px;
+  background-color: #25d366;
+  border-radius: 999px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0px 12px 30px rgba(0, 0, 0, 0.25);
+  z-index: 999;
+  transition: transform 0.18s ease, box-shadow 0.18s ease;
+}
+
+.whatsapp-float:hover {
+  transform: translateY(-2px) scale(1.04);
+  box-shadow: 0px 16px 36px rgba(0, 0, 0, 0.35);
+}
+
+.whatsapp-float svg {
+  width: 28px;
+  height: 28px;
+  fill: white;
+}
+  </style>
+</head>
+
+<!-- WhatsApp Floating Button -->
+<a
+  href="https://wa.me/15613829897?text=Hola,%20necesito%20ayuda%20con%20un%20tr%C3%A1mite%20del%20Seguro%20Social."
+  class="whatsapp-float"
+  target="_blank"
+  aria-label="Contactar por WhatsApp"
+>
+  <!-- WhatsApp Icon (SVG) -->
+  <svg viewBox="0 0 32 32" aria-hidden="true">
+    <path
+      d="M19.11 17.42c-.29-.15-1.71-.84-1.98-.94-.27-.1-.46-.15-.66.15-.2.29-.76.94-.94 1.13-.17.2-.34.22-.63.07-.29-.15-1.24-.46-2.36-1.47-.87-.78-1.46-1.74-1.63-2.03-.17-.29-.02-.45.13-.6.13-.13.29-.34.44-.51.15-.17.2-.29.29-.49.1-.2.05-.37-.02-.52-.07-.15-.66-1.59-.91-2.18-.24-.58-.48-.5-.66-.51-.17-.01-.37-.01-.56-.01-.2 0-.52.07-.79.37-.27.29-1.04 1.01-1.04 2.46 0 1.45 1.06 2.85 1.21 3.05.15.2 2.09 3.19 5.06 4.47.71.31 1.27.5 1.7.64.71.23 1.36.2 1.87.12.57-.09 1.71-.7 1.95-1.38.24-.68.24-1.26.17-1.38-.07-.12-.27-.2-.56-.34z"
+    />
+    <path
+      d="M16.02 3C8.83 3 3 8.83 3 16c0 2.53.75 5.01 2.17 7.13L3 29l6.02-2.17A12.9 12.9 0 0 0 16.02 29C23.19 29 29 23.17 29 16S23.19 3 16.02 3zm0 23.58c-2.21 0-4.38-.59-6.27-1.71l-.45-.27-3.57 1.29 1.31-3.48-.29-.48A10.55 10.55 0 1 1 16.02 26.58z"
+    />
+  </svg>
+</a>
+
+
+<body>
+  <header>
+    <nav class="nav">
+      <a href="#inicio" class="logo">
+        <div class="logo-icon">SS</div>
+        Apoyo Seguro Social
+      </a>
+      <div class="nav-links">
+        <a href="#servicios">Servicios</a>
+        <a href="#proceso">Cómo funciona</a>
+        <a href="#contacto">Contacto</a>
+      </div>
+      <div class="nav-cta">
+        <a href="#contacto" class="btn btn-outline">Escríbenos</a>
+        <a href="#contacto" class="btn btn-primary">Agendar consulta</a>
+      </div>
+    </nav>
+  </header>
+
+    <main id="inicio">
+      <!-- HERO -->
+      <section class="hero">
+        <div>
+          <p class="hero-kicker">Acompañamiento en trámites SSA</p>
+          <h1 class="hero-title">
+            No estás solo con tus trámites del
+            <span class="hero-highlight">Seguro Social</span>.
+          </h1>
+          <p class="hero-text">
+            Te ayudamos a entender cartas, organizar documentos y llenar
+            formularios del Seguro Social (SSA) en español, paso a paso y sin
+            tecnicismos.
+          </p>
+          <ul class="hero-list">
+            <li>Explicación clara de cartas y notificaciones del SSA.</li>
+            <li>Apoyo para completar formularios SSI, SSDI y más.</li>
+            <li>Recordatorios de fechas importantes para que no se te pase nada.</li>
+          </ul>
+          <div class="hero-cta-row">
+            <a href="#contacto" class="btn btn-primary">
+              Agendar llamada gratuita
+            </a>
+            <span class="hero-note">
+              <strong>Nota:</strong> No somos abogados ni ofrecemos asesoría
+              legal. Somos apoyo administrativo y educativo.
+            </span>
+          </div>
+        </div>
+        <aside class="hero-card">
+          <p class="hero-card-title">
+            ¿En qué podemos ayudarte con tu caso de Seguro Social?
+          </p>
+          <div class="hero-badge-row">
+            <span class="badge">Cartas SSA</span>
+            <span class="badge badge-soft">Formularios</span>
+            <span class="badge">Organización</span>
+          </div>
+          <ul class="hero-card-list">
+            <li>Revisamos contigo lo que dice cada carta.</li>
+            <li>Te apoyamos a llenar la solicitud o apelación.</li>
+            <li>Te ayudamos a preparar lo que necesitas antes de llamar o ir a la oficina.</li>
+          </ul>
+          <p class="hero-mini">
+            Tú decides: podemos acompañarte una sola vez o durante todo el proceso.
+          </p>
+        </aside>
+      </section>
+
+      <!-- SERVICIOS -->
+      <section id="servicios" class="section">
+        <div class="section-header">
+          <div>
+            <h2 class="section-title">Servicios de apoyo administrativo</h2>
+            <p class="section-subtitle">
+              Nuestro objetivo es que entiendas tus opciones y no te sientas
+              perdido con el Seguro Social. No tomamos decisiones por ti ni
+              sustituimos a un abogado: te acompañamos y organizamos todo
+              contigo.
+            </p>
+          </div>
+        </div>
+
+        <div class="grid grid-3">
+          <article class="card">
+            <p class="card-label">Documentos</p>
+            <h3 class="card-title">Revisión de cartas y organización</h3>
+            <p class="card-text">
+              Trae tus cartas y papeles relacionados con el Seguro Social; los
+              revisamos, traducimos a lenguaje sencillo y te ayudamos a
+              organizarlos.
+            </p>
+            <ul class="card-list">
+              <li>Explicación de cartas del SSA.</li>
+              <li>Resumen claro de qué te están pidiendo.</li>
+              <li>Lista organizada de documentos importantes.</li>
+            </ul>
+          </article>
+
+          <article class="card">
+            <p class="card-label">Formularios</p>
+            <h3 class="card-title">Apoyo para solicitudes y apelaciones</h3>
+            <p class="card-text">
+              Te acompañamos mientras llenas formularios del SSA, aclarando lo
+              que pregunta cada sección para que puedas responder con confianza.
+            </p>
+            <ul class="card-list">
+              <li>Solicitudes iniciales (por ejemplo, SSI/SSDI).</li>
+              <li>Cuestionarios y formularios de seguimiento.</li>
+              <li>Cartas de respuesta básicas.</li>
+            </ul>
+          </article>
+
+          <article class="card">
+            <p class="card-label">Acompañamiento</p>
+            <h3 class="card-title">Recordatorios y preparación</h3>
+            <p class="card-text">
+              Te ayudamos a no perder plazos importantes y a estar preparado
+              antes de llamar o ir a la oficina del Seguro Social.
+            </p>
+            <ul class="card-list">
+              <li>Calendario de fechas límite.</li>
+              <li>Recordatorios por mensaje o correo.</li>
+              <li>Preparación de preguntas para llamar al SSA.</li>
+            </ul>
+          </article>
+        </div>
+      </section>
+
+      <!-- PROCESO -->
+      <section id="proceso" class="section">
+        <div class="section-header">
+          <div>
+            <h2 class="section-title">Cómo funciona nuestro acompañamiento</h2>
+            <p class="section-subtitle">
+              Todo empieza con una conversación corta donde nos cuentas tu
+              situación. A partir de ahí, definimos juntos en qué parte del
+              proceso necesitas más apoyo.
+            </p>
+          </div>
+        </div>
+
+        <div class="steps">
+          <div class="step">
+            <div class="step-number">1</div>
+            <div>
+              <p class="step-body-title">Llamada o mensaje inicial (gratuito)</p>
+              <p class="step-body-text">
+                Nos explicas qué cartas recibiste o en qué parte del proceso de
+                Seguro Social estás. Vemos si realmente podemos ayudarte o si
+                es mejor que hables directamente con un abogado u otra entidad.
+              </p>
+            </div>
+          </div>
+
+          <div class="step">
+            <div class="step-number">2</div>
+            <div>
+              <p class="step-body-title">Revisión de documentos</p>
+              <p class="step-body-text">
+                Revisamos cartas y papeles contigo, los organizamos y
+                preparamos una lista de tareas claras: qué falta, qué formularios
+                hay que completar, qué fechas tienes que cuidar.
+              </p>
+            </div>
+          </div>
+
+          <div class="step">
+            <div class="step-number">3</div>
+            <div>
+              <p class="step-body-title">Acompañamiento en formularios y pasos</p>
+              <p class="step-body-text">
+                Te apoyamos mientras llenas formularios y te ayudamos a
+                preparar llamadas/visitas al SSA. Tú siempre decides qué enviar
+                y qué contestar; nosotros solo te guiamos y explicamos.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- TESTIMONIO SIMPLE / CONFIANZA -->
+      <section class="section">
+        <div class="section-header">
+          <div>
+            <h2 class="section-title">Un apoyo claro y en tu idioma</h2>
+            <p class="section-subtitle">
+              Muchas personas se sienten abrumadas por el lenguaje técnico y
+              las fechas límite del Seguro Social. Nuestro trabajo es ayudarte
+              a ver el panorama con calma y claridad.
+            </p>
+          </div>
+        </div>
+        <div class="grid grid-2">
+          <article class="card">
+            <p class="quote">
+              “Tenía un montón de cartas del Seguro Social y no entendía nada.
+              Aquí me ayudaron a ordenarlas, entender qué tenía que hacer y a
+              mandar las respuestas a tiempo.”
+            </p>
+            <p class="quote-name">Cliente de apoyo SSA (testimonio ejemplo)</p>
+          </article>
+
+          <article class="card">
+            <p class="quote">
+              “Lo que más agradecí fue que me explicaron todo en español
+              sencillo, sin palabras raras. Me sentí acompañado en cada paso.”
+            </p>
+            <p class="quote-name">Cliente de apoyo SSA (testimonio ejemplo)</p>
+          </article>
+        </div>
+      </section>
+
+      <!-- CONTACTO -->
+      <section id="contacto" class="section">
+        <div class="section-header">
+          <div>
+            <h2 class="section-title">Contáctanos</h2>
+            <p class="section-subtitle">
+              Cuéntanos brevemente tu situación con el Seguro Social. Te
+              responderemos para coordinar una llamada corta y ver cómo
+              podemos ayudarte.
+            </p>
+          </div>
+        </div>
+
+        <div class="contact-grid">
+          <form class="form">
+            <div class="field">
+              <label for="nombre">Nombre completo</label>
+              <input id="nombre" type="text" placeholder="Escribe tu nombre" />
+            </div>
+            <div class="field">
+              <label for="telefono">Teléfono o WhatsApp</label>
+              <input
+                id="telefono"
+                type="tel"
+                placeholder="(000) 000-0000"
+              />
+            </div>
+            <div class="field">
+              <label for="email">Correo electrónico</label>
+              <input
+                id="email"
+                type="email"
+                placeholder="tucorreo@ejemplo.com"
+              />
+            </div>
+            <div class="field">
+              <label for="mensaje">¿En qué situación estás?</label>
+              <textarea
+                id="mensaje"
+                placeholder="Por ejemplo: recibí una carta del Seguro Social y no entiendo qué me están pidiendo..."
+              ></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary">
+              Enviar mensaje
+            </button>
+            <p class="contact-note">
+              *Por ahora este formulario es solo de ejemplo. Puedes adaptar el
+              envío para que llegue a tu correo, WhatsApp o CRM.
+            </p>
+          </form>
+
+          <aside class="contact-side">
+            <h3 class="contact-side-title">Importante saber</h3>
+            <p>
+              Somos un servicio de apoyo administrativo y educativo en temas
+              relacionados al Seguro Social (SSA). No somos abogados ni
+              representamos a personas en procesos legales.
+            </p>
+            <ul class="contact-side-list">
+              <li>No ofrecemos asesoría legal.</li>
+              <li>No tomamos decisiones por ti; te explicamos y tú decides.</li>
+              <li>Podemos referirte a abogados u organizaciones cuando tu caso lo requiera.</li>
+            </ul>
+            <p class="disclaimer">
+              Esta página tiene fines informativos y de ejemplo. Las reglas
+              pueden variar según tu estado o país; siempre consulta con un
+              profesional autorizado si necesitas asesoría legal.
+            </p>
+          </aside>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <span>© <span id="year"></span> Apoyo Seguro Social. Todos los derechos reservados.</span>
+      <span>Este sitio es un ejemplo de diseño estático para tu proyecto.</span>
+    </footer>
+
+    <script>
+      // Colocar año actual automáticamente
+      document.getElementById("year").textContent = new Date().getFullYear();
+    </script>
+  </body>
+</html>
